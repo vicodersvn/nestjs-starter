@@ -673,6 +673,14 @@
   dependencies:
     uuid "8.3.0"
 
+"@nestjs/websockets@^7.4.4":
+  version "7.4.4"
+  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-7.4.4.tgz#2530f2f3d2271e2880be58246271f4c7d505f167"
+  integrity sha512-XT2lRnCiw2d6IpscRFcjjkUFA0FgZYaE3On1pmW8FvQSWlHnu3Izl/TgyySJZNDKpRnmnh4IGFA4GZ6VML//1A==
+  dependencies:
+    iterare "1.2.1"
+    tslib "2.0.1"
+
 "@nuxtjs/opencollective@0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@nuxtjs/opencollective/-/opencollective-0.2.2.tgz#26a761ebf588cc92a422d7cee996a66bd6e2761e"
