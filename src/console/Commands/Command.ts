@@ -19,11 +19,6 @@ export class Command implements ICommand {
   options(): IOption[] {
     return [];
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async handle(...args): Promise<any> {
-    return '';
-  }
 }
 
 export const Info = (content: string): void => {
