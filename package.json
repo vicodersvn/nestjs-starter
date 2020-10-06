@@ -1,8 +1,8 @@
 {
-  "name": "vicoders-starter",
+  "name": "@vicoders/nestjs-starter",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Vicoders NestJS Starter KIT",
+  "author": "Hieupv <hieupv@vicoders.com>",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -10,23 +10,45 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "npm run prebuild && nest build --webpack --webpackPath webpack-hmr.config.js",
+    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js --config config/ormconfig.ts",
+    "migration:create": "npm run typeorm migration:create -- -d database/migrations -n",
+    "db:migrate": "npm run typeorm migration:run",
+    "db:seed": "npm run command seed --",
+    "db:rollback": "npm run typeorm migration:revert",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/src/main.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "command": "node --require ts-node/register command.ts",
+    "prepush": "npm run lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run prepush"
+    }
   },
   "dependencies": {
     "@nestjs/common": "^7.0.0",
+    "@nestjs/config": "^0.5.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/typeorm": "^7.1.4",
+    "bcrypt": "^5.0.0",
+    "class-transformer": "^0.3.1",
+    "class-validator": "^0.12.2",
+    "lodash": "^4.17.15",
+    "mysql": "^2.18.1",
+    "nodemailer": "^6.4.13",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^6.5.4"
+    "rxjs": "^6.5.4",
+    "slugify": "^1.4.5",
+    "typeorm": "^0.2.28"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.0.0",
@@ -41,14 +63,17 @@
     "eslint": "7.7.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1",
+    "husky": "^4.3.0",
     "jest": "26.4.2",
     "prettier": "^1.19.1",
+    "start-server-webpack-plugin": "^2.2.5",
     "supertest": "^4.0.2",
     "ts-jest": "26.2.0",
     "ts-loader": "^6.2.1",
     "ts-node": "9.0.0",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^3.7.4"
+    "typescript": "^3.7.4",
+    "webpack-node-externals": "^2.5.2"
   },
   "jest": {
     "moduleFileExtensions": [
