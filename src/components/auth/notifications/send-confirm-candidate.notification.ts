@@ -14,11 +14,6 @@ export class SendConfirmedCandidateNotification extends Notification {
   }
 
   toMail(): IMailable | Promise<IMailable> {
-    return new Mailable()
-      .to(this.notifiable.email)
-      .subject('Kết quả phỏng vấn')
-      .greeting('Hi!')
-      .line(this.mess)
-      .line('Thank you for your patience.');
+    return new Mailable().to(this.notifiable.email).subject('Kết quả phỏng vấn').greeting('Hi!').line(this.mess).line('Thank you for your patience.');
   }
 }

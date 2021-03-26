@@ -8,7 +8,7 @@ export default class RolesTableSeeder {
       { name: 'Admin', slug: 'admin' },
       { name: 'User', slug: 'user' },
     ];
-    const roles = items.map(i => {
+    const roles = items.map((i) => {
       const r = new Role();
       r.name = i.name;
       r.slug = i.slug;

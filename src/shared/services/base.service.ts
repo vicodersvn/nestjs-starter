@@ -57,7 +57,7 @@ export class BaseService {
     }
     options = omit(
       options,
-      filter(keys(options), function(key) {
+      filter(keys(options), function (key) {
         return isUndefined(options[key]);
       }),
     );

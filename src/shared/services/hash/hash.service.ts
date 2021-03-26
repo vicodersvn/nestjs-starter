@@ -16,9 +16,6 @@ export class HashService {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   md5(data: any): string {
-    return crypto
-      .createHash('md5')
-      .update(data)
-      .digest('hex');
+    return crypto.createHash('md5').update(data).digest('hex');
   }
 }

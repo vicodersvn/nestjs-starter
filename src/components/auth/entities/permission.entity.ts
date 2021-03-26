@@ -1,5 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToMany, JoinTable } from 'typeorm';
-import { Role } from './role.entity';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity({ name: 'permissions' })
 export class Permission {
@@ -15,9 +14,6 @@ export class Permission {
     type: 'varchar',
   })
   slug: string;
-
-  @Column()
-  permission_group_id: number;
 
   @DeleteDateColumn({ type: 'timestamp' })
   public deleted_at: Date;
@@ -35,22 +31,4 @@ export class Permission {
     default: () => 'NOW()',
   })
   public updated_at: Date;
-
-  @ManyToMany(
-    () => Role,
-    role => role.permissions,
-    { cascade: ['insert'] },
-  )
-  @JoinTable({
-    name: 'role_permission',
-    joinColumn: {
-      name: 'permission_id',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'role_id',
-      referencedColumnName: 'id',
-    },
-  })
-  roles: Role[];
 }

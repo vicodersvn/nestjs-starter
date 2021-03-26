@@ -23,12 +23,18 @@ export class UserService extends BaseService {
   }
 
   async generateVerifyToken(id: number): Promise<boolean> {
-    const item = await this.update(id, { verify_token: `${this.hashService.md5(id.toString())}${this.hashService.md5(new Date().toISOString())}` });
+    const item = await this.update(id, {
+      verify_token: `${this.hashService.md5(id.toString())}${this.hashService.md5(new Date().toISOString())}`,
+    });
     return item;
   }
 
   async verify(id: number): Promise<User> {
-    const item = await this.update(id, { verify_token: '', verified: true, verified_at: new Date() });
+    const item = await this.update(id, {
+      verify_token: '',
+      verified: true,
+      verified_at: new Date(),
+    });
     return item;
   }
 

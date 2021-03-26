@@ -20,7 +20,9 @@ import { UserSendMailReportNotification } from '../notifications/user-send-email
 import { AuthenticatedUser } from '../../auth/decorators/authenticated-user.decorator';
 import { User } from '../entities/user.entity';
 import { map, isEmpty } from 'lodash';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('users')
 @Controller('api/v1/users')
 export class UserController {
   constructor(
@@ -40,14 +42,14 @@ export class UserController {
       page: query.page ? query.page : 1,
     };
     let query_buidler = getCustomRepository(UserRepository).createQueryBuilder('user');
-    const user_roles = map(user.roles, r => r.slug);
+    const user_roles = map(user.roles, (r) => r.slug);
     if (includes(user_roles, 'user') || isEmpty(user_roles)) {
-      query_buidler = getCustomRepository(UserRepository)
-        .createQueryBuilder('user')
-        .where('user.id = :id', { id: user.id });
+      query_buidler = getCustomRepository(UserRepository).createQueryBuilder('user').where('user.id = :id', { id: user.id });
     }
     if (request.search && request.search !== '') {
-      query_buidler = query_buidler.andWhere('email LIKE :keyword', { keyword: `%${request.search}%` });
+      query_buidler = query_buidler.andWhere('email LIKE :keyword', {
+        keyword: `%${request.search}%`,
+      });
     }
     if (!isNil(query.includes) && query.includes !== '') {
       relations = query.includes.split(',');
@@ -78,7 +80,9 @@ export class UserController {
   @Auth('admin')
   async changePassword(@Param('id', ParseIntPipe) id: number, @Body() data: AdminChangeUserBodyParam): Promise<any> {
     const user = await this.userService.findOrFail(id);
-    await this.userService.update(user.id, { password: this.userService.hashPassword(data.password) });
+    await this.userService.update(user.id, {
+      password: this.userService.hashPassword(data.password),
+    });
     if (isBoolean(data.notify_user) && data.notify_user === true) {
       this.notificationService.send(user, new UserPasswordChangedNotification(data.password));
     }
@@ -96,7 +100,9 @@ export class UserController {
 
   @Post(':id/verify')
   async verify(@Query('token') token: string): Promise<any> {
-    const user = await this.userService.firstOrFail({ where: { verify_token: token, verified: false, verified_at: null } });
+    const user = await this.userService.firstOrFail({
+      where: { verify_token: token, verified: false, verified_at: null },
+    });
     const result = await this.userService.verify(user.id);
     return this.response.item(result, new UserTransformer());
   }

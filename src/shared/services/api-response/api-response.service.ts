@@ -38,7 +38,7 @@ export class ApiResponseService {
    * @return Object
    */
   collection(collection: Entity[], transformer: TransformerInterface): { data: { [key: string]: any } } {
-    const data = collection.map(i => {
+    const data = collection.map((i) => {
       return transformer.get(i);
     });
     return { data: data };
@@ -72,7 +72,7 @@ export class ApiResponseService {
     if (!(paginator instanceof Pagination)) {
       throw new BadRequestException(`ApiResponse.paginate expect a Pagination instead a ${typeof paginator}`);
     }
-    const items = paginator.items.map(i => {
+    const items = paginator.items.map((i) => {
       return transformer.get(i);
     });
     return {

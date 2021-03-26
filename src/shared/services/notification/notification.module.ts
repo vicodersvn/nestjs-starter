@@ -6,7 +6,7 @@ import { NOTIFICATION_OPTIONS, NOTIFICATION_CHANNELS } from './constants';
 export const channelFactory = {
   provide: NOTIFICATION_CHANNELS,
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  useFactory: async notificationService => {
+  useFactory: async (notificationService) => {
     return notificationService.register();
   },
   inject: [NotificationService],

@@ -15,11 +15,6 @@ export class UserSendMailReportNotification extends Notification {
   }
 
   toMail(): IMailable | Promise<IMailable> {
-    return new Mailable()
-      .to(this.mailSend)
-      .from(this.notifiable.email, 'Vicoders')
-      .greeting('Hello')
-      .subject('Work report !')
-      .action('Report', this.linkReport)
+    return new Mailable().to(this.mailSend).from(this.notifiable.email, 'Vicoders').greeting('Hello').subject('Work report !').action('Report', this.linkReport);
   }
 }

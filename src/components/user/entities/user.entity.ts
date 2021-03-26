@@ -67,11 +67,7 @@ export class User {
   })
   public updated_at: Date;
 
-  @ManyToMany(
-    () => Role,
-    role => role.users,
-    { cascade: ['insert'] },
-  )
+  @ManyToMany(() => Role, (role) => role.users, { cascade: ['insert'] })
   @JoinTable({
     name: 'user_role',
     joinColumn: {

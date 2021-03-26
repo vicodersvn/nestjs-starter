@@ -17,7 +17,7 @@ export default class UsersTableSeeder {
       { email: 'admin@vicoders.com', username: 'admin', password: this.hashService.hash('secret'), role: 'admin' },
       { email: 'user@vicoders.com', username: 'user', password: this.hashService.hash('secret'), role: 'user' },
     ];
-    const users = items.map(i => {
+    const users = items.map((i) => {
       const user = new User();
       user.email = i.email;
       user.username = i.username;

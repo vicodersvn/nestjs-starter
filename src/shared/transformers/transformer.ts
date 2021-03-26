@@ -55,7 +55,7 @@ export class Transformer implements TransformerInterface {
     if (!isArray(collection)) {
       throw new InternalServerErrorException('collection should be an array');
     }
-    const data = map(collection, i => transformer.get(i));
+    const data = map(collection, (i) => transformer.get(i));
     return { data };
   }
 
@@ -66,7 +66,7 @@ export class Transformer implements TransformerInterface {
   get(entity: Entity): Entity {
     const data = (this as any).transform(entity);
     if (Array.isArray(this.includes) && this.includes.length > 0) {
-      forEach(this.includes, include => {
+      forEach(this.includes, (include) => {
         const f = camelCase(`include_${include}`);
         if (!isFunction(this[f])) {
           throw new Error(`${f} function is missing`);

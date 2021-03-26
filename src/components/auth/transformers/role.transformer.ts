@@ -3,10 +3,10 @@ import { Transformer } from '../../../shared/transformers/transformer';
 import { PermissionTransformer } from './permission.transformer';
 
 interface RoleInterface {
-  id: number,
-  name: string,
-  slug: string,
-  permissions?: any
+  id: number;
+  name: string;
+  slug: string;
+  permissions?: any;
 }
 
 export class RoleTransformer extends Transformer {

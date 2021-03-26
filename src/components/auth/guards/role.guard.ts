@@ -18,7 +18,7 @@ export class RoleGuard implements CanActivate {
     return (
       intersection(
         roles,
-        user.roles.map(i => i.slug),
+        user.roles.map((i) => i.slug),
       ).length > 0
     );
   }

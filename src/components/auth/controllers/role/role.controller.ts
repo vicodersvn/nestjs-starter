@@ -6,7 +6,10 @@ import { Auth } from '../../decorators/auth.decorator';
 import { RoleTransformer } from '../../transformers/role.transformer';
 import { Request } from 'express';
 import { assign } from 'lodash';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Roles')
+@ApiBearerAuth()
 @Controller('api/v1/roles')
 export class RoleController {
   constructor(private response: ApiResponseService, private roleService: RoleService) {}
@@ -19,7 +22,9 @@ export class RoleController {
     };
     let query_buildler = this.roleService.repository.createQueryBuilder('role');
     if (query.search && query.search !== '') {
-      query_buildler = query_buildler.where('role.name LIKE :keyword', { keyword: `%${query.search}%` });
+      query_buildler = query_buildler.where('role.name LIKE :keyword', {
+        keyword: `%${query.search}%`,
+      });
     }
     const data = await this.roleService.paginate(query_buildler, params);
     return this.response.paginate(data, new RoleTransformer([]));
@@ -37,7 +42,9 @@ export class RoleController {
   @Get(':id')
   @Auth('admin')
   async show(@Param('id', ParseIntPipe) id: number): Promise<any> {
-    const role = await this.roleService.find(id, { relations: ['permissions'] });
+    const role = await this.roleService.find(id, {
+      relations: ['permissions'],
+    });
     return this.response.item(role, new RoleTransformer(['permissions']));
   }
 
@@ -55,13 +62,5 @@ export class RoleController {
   async delete(@Param('id', ParseIntPipe) id: string): Promise<any> {
     await this.roleService.destroy(id);
     return { data: 'success' };
-  }
-
-  @Put(':id/save-permissions')
-  @Auth('admin')
-  async savePermission(@Param('id', ParseIntPipe) id: number, @Req() request: Request): Promise<any> {
-    const data = (request as any).body;
-    const result = await this.roleService.savePermissionsToRole(id, data.permission_ids);
-    return result;
   }
 }

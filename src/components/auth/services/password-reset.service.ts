@@ -50,7 +50,10 @@ export class PasswordResetService extends BaseService {
    * @param email string
    */
   async generate(email: string): Promise<any> {
-    return await this.create({ email: email, token: this.hashService.md5(new Date().toISOString()) });
+    return await this.create({
+      email: email,
+      token: this.hashService.md5(new Date().toISOString()),
+    });
   }
 
   /**
